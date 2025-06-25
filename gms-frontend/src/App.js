@@ -5,7 +5,7 @@ import Home from "./Pages/Home/Home";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-<h1>pler ayama</h1>;
+
 
 function App() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ function App() {
       navigate("/dashboard");
     }
   }, [sessionStorage.getItem("isLogin")]);
-
+  <h1>pepepk</h1>
   return (
     <div className="flex">
       {isLogin && <Sidebar />}
