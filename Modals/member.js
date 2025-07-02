@@ -1,33 +1,29 @@
 const mongoose = require("mongoose");
 
-
 const memberSchema = mongoose.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     mobileNo: {
         type: String,
-
     },
     address: {
         type: String,
-
     },
     membership: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "membership",
-        require: true
+        required: true
     },
     gym: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "gym",
-        require: true
+        required: true
     },
-    profilPic: {
+    profilePic: {
         type: String,
-        require: true,
-
+        required: true,
     },
     status: {
         type: String,
@@ -36,15 +32,15 @@ const memberSchema = mongoose.Schema({
     lastPayment: {
         type: Date,
         default: new Date(),
-
     },
     nextBillDate: {
         type: Date,
-        require: true
-
+        required: true
     }
-})
+}, {
+    timestamps: true
+});
 
-const memberModel = mongoose.Model("member", memberSchema);
+const memberModel = mongoose.model("member", memberSchema);
 
 module.exports = memberModel;

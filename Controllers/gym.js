@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
         const gym = await Gym.findOne({ userName });
 
         if (gym && await bcrypt.compare(password, gym.password)) {
-            const token = jwt.sign({ gym_id: gym._id }, process.env.JWT_SecretKey);
+            const token = jwt.sign({ gym_id: gym._id }, process.env.JWT_SECRET);
 
             res.cookie("cookie_token", token, cookieOptions)
 

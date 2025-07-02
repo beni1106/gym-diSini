@@ -12,10 +12,12 @@ require('./DBConn/conn');
 
 const GymRoutes = require('./Routes/gym');
 const membershipRoutes = require('./Routes/membership');
+const MemberRoutes = require('./Routes/member');
 
 
 app.use('/auth', GymRoutes);
 app.use('/plans', membershipRoutes);
+app.use('/members', MemberRoutes);
 
 
 
