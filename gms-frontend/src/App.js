@@ -19,7 +19,7 @@ function App() {
       navigate("/");
     }
   }, [sessionStorage.getItem("isLogin")]);
-  <h1>pepepk</h1>;
+
   return (
     <div className="flex">
       {isLogin && <Sidebar />}
