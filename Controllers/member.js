@@ -145,3 +145,143 @@ exports.expiringwithin3Days = async (req, res) => {
         res.status(500).json({ error: 'server error' });
     }
 }
+
+exports.expiringwithin4To7Days = async (req, res) => {
+    try {
+        const today = new Date();
+        const next4Days = new Date();
+        next4Days.setDate(today.getDate() + 4)
+
+        const next7Days = new Date();
+        next7Days.setDate(today.getDate() + 7)
+
+
+        const member = await Member.find({
+            gym: req.gym._id,
+            nextBillDate: {
+                $gte: next4Days,
+                $lte: next7Days
+
+            }
+        });
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member is expired 4-7 days",
+            members: member,
+            totalMember: member.length
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.expiredMember = async (req, res) => {
+    try {
+        const today = new Date();
+
+        const member = await Member.find({
+            gym: req.gym._id, status: "Active",
+            nextBillDate: {
+                $lt: today
+            }
+        })
+
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member has been expired",
+            members: member,
+            totalMember: member.length
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+
+exports.InActiveMember = async (req, res) => {
+    try {
+        const member = await Member.find({ gym: req.gym._id, status: "Pending" });
+
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member is pending",
+            members: member,
+            totalMember: member.length
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.getMemberDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const member = await Member.findOne({ _id: id, gym: req.gym._id });
+        if (!member) {
+            return res.status(400).json({
+                error: "no such member"
+            })
+        }
+        res.status(200).json({
+            message: "member data fetched",
+            members: member
+
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.changeStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const member = await Member.findOne({ _id: id, gym: req.gym._id });
+        if (!member) {
+            return res.status(400).json({
+                error: "no such member"
+            })
+        }
+        member.status = status;
+        await member.save();
+        res.status(200).json({ message: "status changed succes" })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.updateMemberPlan = async (req, res) => {
+    try {
+        const { membership } = req.body;
+        const { id } = req.params;
+        const memberShip = await Membership.findOne({ gym: req.gym._id, _id: membership });
+        if (memberShip) {
+            let getMonth = memberShip.months;
+            let today = new Date();
+            let nextBillDate = addMonthsToDate(getMonth, today);
+            const member = await Member.findOne({ gym: req.gym._id, _id: id });
+            if (!member) {
+                return res.status(409).json({ error: "no such member there" })
+            }
+            member.nextBillDate = nextBillDate;
+            member.lastPayment = today;
+
+            await member.save();
+            res.status(200).json({ message: "member renewed succesfulls", member });
+
+        } else {
+            return res.status(409).json({ error: "no such member there" })
+        }
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
