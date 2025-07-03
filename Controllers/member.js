@@ -71,3 +71,77 @@ exports.registerMember = async (req, res) => {
         res.status(500).json({ error: 'server error' });
     }
 }
+
+exports.searchMember = async (req, res) => {
+    try {
+        const { searchTerm } = req.query;
+        const member = await Member.find({
+            gym: req.gym._id,
+            $or: [{ name: { $regex: '^' + searchTerm, $options: 'i' } },
+            { mobileNo: { $regex: '^' + searchTerm, $options: 'i' } }
+
+            ]
+        });
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member registerd",
+            members: member,
+            totalMember: member.length
+        });
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.monthlyMember = async (req, res) => {
+    try {
+        const now = new Date(); // ✅ Tambahkan ini
+        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+        const member = await Member.find({
+            gym: req.gym._id,
+            createdAt: {
+                $gte: startOfMonth,
+                $lte: endOfMonth
+
+            }
+        }).sort({ createdAt: -1 });
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member registerd",
+            members: member,
+            totalMember: member.length
+        })
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}
+
+exports.expiringwithin3Days = async (req, res) => {
+    try {
+        const today = new Date();
+        const nextThreeDays = new Date();
+        nextThreeDays.setDate(today.getDate() + 3);
+
+        const member = await Member.find({
+            gym: req.gym._id,
+            nextBillDate: {
+                $gte: today,
+                $lte: nextThreeDays
+
+            }
+        });
+
+        res.status(200).json({
+            message: member.length ? "fetched members succes" : "no such member is expired 3 days",
+            members: member,
+            totalMember: member.length
+        })
+
+
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ error: 'server error' });
+    }
+}

@@ -39,7 +39,7 @@ const memberSchema = mongoose.Schema({
     }
 }, {
     timestamps: true
-});
+})
 
 const memberModel = mongoose.model("member", memberSchema);
 
