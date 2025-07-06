@@ -1,9 +1,12 @@
 import React from "react";
 import CircleIcon from "@mui/icons-material/Circle";
-
+import { Link } from "react-router-dom";
 const MemberCard = () => {
   return (
-    <div className="bg-white rounded-lg p-3 hover:bg-gradient-to-r from-indigo-500 via-puple-500 to-pink-500 hover:text-white cursor-pointer">
+    <Link
+      to={"/member/123"}
+      className="bg-white rounded-lg p-3 hover:bg-gradient-to-r from-indigo-500 via-puple-500 to-pink-500 hover:text-white cursor-pointer"
+    >
       <div className="w-28 h-28 flex justify-center relative items-center border-2 p-2 mx-auto rounded-full">
         <img
           className="w-full h-full rounded-full "
@@ -24,7 +27,7 @@ const MemberCard = () => {
       <div className="mx-auto mt-2 text-center text-lg font-mono">
         Next Bill Date : {"12-09-2024"}
       </div>
-    </div>
+    </Link>
   );
 };
 

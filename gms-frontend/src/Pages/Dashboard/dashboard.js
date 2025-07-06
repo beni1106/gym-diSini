@@ -28,6 +28,10 @@ const Dashboard = () => {
     };
   }, [accordianDashboard]);
 
+  const handleOnClickMenu = (value) => {
+    sessionStorage.setItem("func", value);
+  };
+
   return (
     <div className="w-3/4 text-black p-5 relative">
       <div className="w-full bg-slate-900 text-white rounded-lg flex p-3 justify-between items-center">
@@ -56,6 +60,7 @@ const Dashboard = () => {
       )}
 
       <div className="mt-5 pt-3 bg-slate-100 bg-opacity-50 grid gap-5 grid-cols-3 w-full pb-5 overflow-x-auto h-[80%] ">
+        {/* {this is the card block} */}
         <Link
           to={"/member"}
           className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
@@ -70,7 +75,12 @@ const Dashboard = () => {
           </div>
         </Link>
 
-        <div className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer">
+        {/* {this is the card block} */}
+        <Link
+          to={"/specific/mounthly"}
+          onClick={() => handleOnClickMenu("monthlyJoined")}
+          className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
+        >
           <div className="h-3 rounded-t-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="py-7 px-5 flex-col justify-center items-center w-full text-center rounded-b-lg hover:bg-slate-900 hover:text-white">
@@ -79,9 +89,14 @@ const Dashboard = () => {
               Monthly Joined
             </p>
           </div>
-        </div>
+        </Link>
 
-        <div className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer">
+        {/* {this is the card block} */}
+        <Link
+          to={"/specific/expire-with-in-3-days"}
+          onClick={() => handleOnClickMenu("treeDayExpire")}
+          className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
+        >
           <div className="h-3 rounded-t-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="py-7 px-5 flex-col justify-center items-center w-full text-center rounded-b-lg hover:bg-slate-900 hover:text-white">
@@ -90,9 +105,14 @@ const Dashboard = () => {
               Expiring within 3 days
             </p>
           </div>
-        </div>
+        </Link>
 
-        <div className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer">
+        {/* {this is the card block} */}
+        <Link
+          to={"/specific/expire-with-in-4-7-days"}
+          onClick={() => handleOnClickMenu("fourToSevenDaysExpire")}
+          className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
+        >
           <div className="h-3 rounded-t-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="py-7 px-5 flex-col justify-center items-center w-full text-center rounded-b-lg hover:bg-slate-900 hover:text-white">
@@ -101,18 +121,28 @@ const Dashboard = () => {
               Expiring within 4-7 days
             </p>
           </div>
-        </div>
+        </Link>
 
-        <div className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer">
+        {/* {this is the card block} */}
+        <Link
+          to={"/specific/expired"}
+          onClick={() => handleOnClickMenu("expired")}
+          className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
+        >
           <div className="h-3 rounded-t-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="py-7 px-5 flex-col justify-center items-center w-full text-center rounded-b-lg hover:bg-slate-900 hover:text-white">
             <ReportIcon sx={{ color: "green", fontSize: "50px" }} />
             <p className="text-xl my-3 font-semibold font-mono">Expired</p>
           </div>
-        </div>
+        </Link>
 
-        <div className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer">
+        {/* {this is the card block} */}
+        <Link
+          to={"/specific/inaactive-members"}
+          onClick={() => handleOnClickMenu("InActiveMembers")}
+          className="w-full h-fit border-2 bg-white rounded-lg cursor-pointer"
+        >
           <div className="h-3 rounded-t-lg bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
 
           <div className="py-7 px-5 flex-col justify-center items-center w-full text-center rounded-b-lg hover:bg-slate-900 hover:text-white">
@@ -121,7 +151,7 @@ const Dashboard = () => {
               InActive Members
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="md:bottom-4 p-4 w-3/4 mb-4 md:mb-0 absolute bg-black text-white mt-20 rounded-xl text-xl">

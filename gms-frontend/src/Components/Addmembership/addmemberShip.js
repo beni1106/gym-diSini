@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 
 const AddmemberShip = () => {
+  const [inputField, setInputField] = useState({ months: "", price: "" });
+
+  const handleOnChange = (event, name) => {
+    setInputField({ ...inputField, [name]: event.target.value });
+  };
+
+  console.log(inputField);
+
   return (
     <div className="text-black">
       <div className="flex flex-warp gap-5 items-center justify-center">
@@ -33,11 +41,19 @@ const AddmemberShip = () => {
 
       <div className="flex gap-10 mb-10">
         <input
+          value={inputField.months}
+          onChange={(event) => {
+            handleOnChange(event, "months");
+          }}
           className="border-2 rounded-lg text-lg w-1/3 h-1/2 p-2"
           type="number"
           placeholder="Add No. Off Bulan"
         />
         <input
+          value={inputField.price}
+          onChange={(event) => {
+            handleOnChange(event, "price");
+          }}
           className="border-2 rounded-lg text-lg w-1/3 h-1/2 p-2"
           type="number"
           placeholder="Add No. Price"

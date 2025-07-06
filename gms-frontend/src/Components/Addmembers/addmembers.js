@@ -1,25 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Addmembers = () => {
+  const [inputField, setInputField] = useState({
+    name: "",
+    mobileName: "",
+    address: "",
+    membership: "",
+    profilePic: "",
+    joiningDate: "",
+  });
+
+  const handleOnChange = (event, name) => {
+    setInputField({ ...inputField, [name]: event.target.value });
+  };
+
+  console.log(inputField);
+
   return (
     <div className="text-black">
       <div className="grid gap-5 grid-cols-2 text-lg">
         <input
+          value={inputField.name}
+          onChange={(event) => {
+            handleOnChange(event, "name");
+          }}
           placeholder="Name Off Joinee"
           type="text"
           className="border-2 w-[90%] pl-3 pt-2 pb-2 border-slate-400 rounded-md h-12"
         />
         <input
+          value={inputField.mobileName}
+          onChange={(event) => {
+            handleOnChange(event, "mobileName");
+          }}
           placeholder="Mobile No"
           type="text"
           className="border-2 w-[90%] pl-3 pt-2 pb-2 border-slate-400 rounded-md h-12"
         />
         <input
+          value={inputField.address}
+          onChange={(event) => {
+            handleOnChange(event, "address");
+          }}
           placeholder="Adress"
           type="text"
           className="border-2 w-[90%] pl-3 pt-2 pb-2 border-slate-400 rounded-md h-12"
         />
         <input
+          value={inputField.joiningDate}
+          onChange={(event) => {
+            handleOnChange(event, "joiningDate");
+          }}
           type="date"
           className="border-2 w-[90%] pl-3 pt-2 pb-2 border-slate-400 rounded-md h-12"
         />

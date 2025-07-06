@@ -5,6 +5,8 @@ import Home from "./Pages/Home/Home";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Member from "./Pages/Member/member";
+import GeneralUser from "./Pages/GeneralUser/generalUser";
+import MemberDetail from "./Pages/MemberDetail/memberDetail";
 
 function App() {
   const navigate = useNavigate();
@@ -16,6 +18,7 @@ function App() {
       setIsLogin(true);
       //navigate("/dashboard");
     } else {
+      setIsLogin(false);
       navigate("/");
     }
   }, [sessionStorage.getItem("isLogin")]);
@@ -28,6 +31,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/member" element={<Member />} />
+        <Route path="/specific/:page" element={<GeneralUser />} />
+        <Route path="/member/:id" element={<MemberDetail />} />
       </Routes>
     </div>
   );
